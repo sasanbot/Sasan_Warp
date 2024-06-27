@@ -1,8 +1,3 @@
-#profile-title: <<Sasan-VPN>>
-#profile-update-interval: 1
-#subscription-userinfo: upload=29; download=12; total=30; expire=30
-#support-url: https://github.com/sasanbot
-#profile-web-page-url: https://github.com/sasanbot
 "geoip": {
       "path": "geo-assets/sagernet-sing-geoip-geoip.db"
     },
