@@ -100,8 +100,16 @@
       "tag": "select",
       "outbounds": [
         "auto",
+        "0442424.bpb-vpn-ck7.pages.dev",
+        "www.speedtest.net",
+        "104.16.225.203",
+        "104.19.195.193",
+        "104.20.50.96",
+        "104.22.77.11",
         "188.114.96.3",
         "188.114.97.3",
+        "[2a06:98c1:3121::3]",
+        "[2a06:98c1:3120::3]"
       ],
       "default": "auto"
     },
@@ -109,7 +117,7 @@
       "type": "urltest",
       "tag": "auto",
       "outbounds": [
-        "04442424.bpb-vpn-ck7.pages.dev",
+        "0442424.bpb-vpn-ck7.pages.dev",
         "www.speedtest.net",
         "104.16.225.203",
         "104.19.195.193",
@@ -126,14 +134,14 @@
     },
     {
       "type": "vless",
-      "tag": "04442424.bpb-vpn-ck7.pages.dev",
+      "tag": "0442424.bpb-vpn-ck7.pages.dev",
       "domain_strategy": "prefer_ipv6",
-      "server": "04442424.bpb-vpn-ck7.pages.dev",
+      "server": "0442424.bpb-vpn-ck7.pages.dev",
       "server_port": 443,
       "uuid": "8f7faaaa-cb73-41ab-b5cf-5c37eb367e91",
       "tls": {
         "enabled": true,
-        "server_name": "04442424.bPb-vPN-CK7.paGeS.DeV",
+        "server_name": "0442424.bPb-vPN-CK7.paGeS.DeV",
         "alpn": "http/1.1",
         "utls": {
           "enabled": true,
