@@ -1,4 +1,435 @@
-"geoip": {
+{
+  "log": {
+    "level": "warn",
+    "output": "box.log",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "dns-remote",
+        "address": "udp://1.1.1.1",
+        "address_resolver": "dns-direct"
+      },
+      {
+        "tag": "dns-trick-direct",
+        "address": "https://sky.rethinkdns.com/",
+        "detour": "direct-fragment"
+      },
+      {
+        "tag": "dns-direct",
+        "address": "1.1.1.1",
+        "address_resolver": "dns-local",
+        "detour": "direct"
+      },
+      {
+        "tag": "dns-local",
+        "address": "local",
+        "detour": "direct"
+      },
+      {
+        "tag": "dns-block",
+        "address": "rcode://success"
+      }
+    ],
+    "rules": [
+      {
+        "domain": [
+          "04442424.bpb-vpn-ck7.pages.dev",
+          "www.speedtest.net",
+          "[2a06:98c1:3121::3]",
+          "[2a06:98c1:3120::3]"
+        ],
+        "server": "dns-direct"
+      },
+      {
+        "domain_suffix": ".ir",
+        "geosite": "ir",
+        "server": "dns-direct"
+      },
+      {
+        "domain": "cp.cloudflare.com",
+        "server": "dns-remote",
+        "rewrite_ttl": 3000
+      }
+    ],
+    "final": "dns-remote",
+    "static_ips": {
+      "sky.rethinkdns.com": [
+        "188.114.96.3",
+        "188.114.97.3",
+        "2a06:98c1:3121::3",
+        "2a06:98c1:3120::3",
+        "104.17.148.22",
+        "104.17.147.22"
+      ]
+    },
+    "independent_cache": true
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "tag": "tun-in",
+      "mtu": 9000,
+      "inet4_address": "172.19.0.1/28",
+      "auto_route": true,
+      "strict_route": true,
+      "endpoint_independent_nat": true,
+      "stack": "mixed",
+      "sniff": true,
+      "sniff_override_destination": true
+    },
+    {
+      "type": "mixed",
+      "tag": "mixed-in",
+      "listen": "127.0.0.1",
+      "listen_port": 2334,
+      "sniff": true,
+      "sniff_override_destination": true
+    },
+    {
+      "type": "direct",
+      "tag": "dns-in",
+      "listen": "127.0.0.1",
+      "listen_port": 6450
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "selector",
+      "tag": "select",
+      "outbounds": [
+        "auto",
+        "04442424.bpb-vpn-ck7.pages.dev",
+        "www.speedtest.net",
+        "104.16.225.203",
+        "104.19.195.193",
+        "104.20.50.96",
+        "104.22.77.11",
+        "188.114.96.3",
+        "188.114.97.3",
+        "[2a06:98c1:3121::3]",
+        "[2a06:98c1:3120::3]"
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "urltest",
+      "tag": "auto",
+      "outbounds": [
+        "04442424.bpb-vpn-ck7.pages.dev",
+        "www.speedtest.net",
+        "104.16.225.203",
+        "104.19.195.193",
+        "104.20.50.96",
+        "104.22.77.11",
+        "188.114.96.3",
+        "188.114.97.3",
+        "[2a06:98c1:3121::3]",
+        "[2a06:98c1:3120::3]"
+      ],
+      "url": "http://cp.cloudflare.com/",
+      "interval": "10m0s",
+      "idle_timeout": "1h40m0s"
+    },
+    {
+      "type": "vless",
+      "tag": "04442424.bpb-vpn-ck7.pages.dev",
+      "domain_strategy": "prefer_ipv6",
+      "server": "04442424.bpb-vpn-ck7.pages.dev",
+      "server_port": 443,
+      "uuid": "8f7faaaa-cb73-41ab-b5cf-5c37eb367e91",
+      "tls": {
+        "enabled": true,
+        "server_name": "04442424.bPb-vPN-CK7.paGeS.DeV",
+        "alpn": "http/1.1",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "randomized"
+        }
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/VRoAygBeGV7l2VDz?ed=2560",
+        "headers": {
+          "Host": "04442424.BPb-vPN-CK7.pageS.DEV"
+        },
+        "max_early_data": 2048,
+        "early_data_header_name": "Sec-WebSocket-Protocol"
+      },
+      "packet_encoding": ""
+    },
+    {
+      "type": "vless",
+      "tag": "www.speedtest.net",
+      "domain_strategy": "prefer_ipv6",
+      "server": "www.speedtest.net",
+      "server_port": 443,
+      "uuid": "8f7faaaa-cb73-41ab-b5cf-5c37eb367e91",
+      "tls": {
+        "enabled": true,
+        "server_name": "04442424.BPB-VpN-ck7.pAGES.DEv",
+        "alpn": "http/1.1",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "randomized"
+        }
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/ZEFdtrhsFvxhkS8f?ed=2560",
+        "headers": {
+          "Host": "04442424.Bpb-vPN-CK7.PagEs.deV"
+        },
+        "max_early_data": 2048,
+        "early_data_header_name": "Sec-WebSocket-Protocol"
+      },
+      "packet_encoding": ""
+    },
+    {
+      "type": "vless",
+      "tag": "104.16.225.203",
+      "domain_strategy": "prefer_ipv6",
+      "server": "104.16.225.203",
+      "server_port": 443,
+      "uuid": "8f7faaaa-cb73-41ab-b5cf-5c37eb367e91",
+      "tls": {
+        "enabled": true,
+        "server_name": "04442424.bPB-VPN-ck7.pagEs.dev",
+        "alpn": "http/1.1",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "randomized"
+        }
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/yBgPfShe9aNo48Cj?ed=2560",
+        "headers": {
+          "Host": "04442424.bpB-VPn-cK7.PAGEs.DEv"
+        },
+        "max_early_data": 2048,
+        "early_data_header_name": "Sec-WebSocket-Protocol"
+      },
+      "packet_encoding": ""
+    },
+    {
+      "type": "vless",
+      "tag": "104.19.195.193",
+      "domain_strategy": "prefer_ipv6",
+      "server": "104.19.195.193",
+      "server_port": 443,
+      "uuid": "8f7faaaa-cb73-41ab-b5cf-5c37eb367e91",
+      "tls": {
+        "enabled": true,
+        "server_name": "04442424.bpB-vpN-ck7.paGes.DEv",
+        "alpn": "http/1.1",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "randomized"
+        }
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/GPPRIBUxC2ErwAh1?ed=2560",
+        "headers": {
+          "Host": "04442424.bpb-vpN-cK7.PagES.dEv"
+        },
+        "max_early_data": 2048,
+        "early_data_header_name": "Sec-WebSocket-Protocol"
+      },
+      "packet_encoding": ""
+    },
+    {
+      "type": "vless",
+      "tag": "104.20.50.96",
+      "domain_strategy": "prefer_ipv6",
+      "server": "104.20.50.96",
+      "server_port": 443,
+      "uuid": "8f7faaaa-cb73-41ab-b5cf-5c37eb367e91",
+      "tls": {
+        "enabled": true,
+        "server_name": "04442424.BPb-vPN-ck7.pAGeS.dev",
+        "alpn": "http/1.1",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "randomized"
+        }
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/Hikr4iAGvo3KMARd?ed=2560",
+        "headers": {
+          "Host": "04442424.bpb-VPN-ck7.pages.deV"
+        },
+        "max_early_data": 2048,
+        "early_data_header_name": "Sec-WebSocket-Protocol"
+      },
+      "packet_encoding": ""
+    },
+    {
+      "type": "vless",
+      "tag": "104.22.77.11",
+      "domain_strategy": "prefer_ipv6",
+      "server": "104.22.77.11",
+      "server_port": 443,
+      "uuid": "8f7faaaa-cb73-41ab-b5cf-5c37eb367e91",
+      "tls": {
+        "enabled": true,
+        "server_name": "04442424.bPB-Vpn-CK7.PAgeS.dEV",
+        "alpn": "http/1.1",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "randomized"
+        }
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/V2rdXZ4uUPA5hxj7?ed=2560",
+        "headers": {
+          "Host": "04442424.bPb-vpn-CK7.PagES.deV"
+        },
+        "max_early_data": 2048,
+        "early_data_header_name": "Sec-WebSocket-Protocol"
+      },
+      "packet_encoding": ""
+    },
+    {
+      "type": "vless",
+      "tag": "188.114.96.3",
+      "domain_strategy": "prefer_ipv6",
+      "server": "188.114.96.3",
+      "server_port": 443,
+      "uuid": "8f7faaaa-cb73-41ab-b5cf-5c37eb367e91",
+      "tls": {
+        "enabled": true,
+        "server_name": "04442424.bpb-VpN-Ck7.PaGeS.DeV",
+        "alpn": "http/1.1",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "randomized"
+        }
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/A3KX644vCtW70Aph?ed=2560",
+        "headers": {
+          "Host": "04442424.BPB-vpN-Ck7.PAGES.DEV"
+        },
+        "max_early_data": 2048,
+        "early_data_header_name": "Sec-WebSocket-Protocol"
+      },
+      "packet_encoding": ""
+    },
+    {
+      "type": "vless",
+      "tag": "188.114.97.3",
+      "domain_strategy": "prefer_ipv6",
+      "server": "188.114.97.3",
+      "server_port": 443,
+      "uuid": "8f7faaaa-cb73-41ab-b5cf-5c37eb367e91",
+      "tls": {
+        "enabled": true,
+        "server_name": "04442424.bpb-vPn-ck7.paGeS.deV",
+        "alpn": "http/1.1",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "randomized"
+        }
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/KLqvtrNEeCoPa1dO?ed=2560",
+        "headers": {
+          "Host": "04442424.bPB-VPn-CK7.PAGes.dEV"
+        },
+        "max_early_data": 2048,
+        "early_data_header_name": "Sec-WebSocket-Protocol"
+      },
+      "packet_encoding": ""
+    },
+    {
+      "type": "vless",
+      "tag": "[2a06:98c1:3121::3]",
+      "domain_strategy": "prefer_ipv6",
+      "server": "[2a06:98c1:3121::3]",
+      "server_port": 443,
+      "uuid": "8f7faaaa-cb73-41ab-b5cf-5c37eb367e91",
+      "tls": {
+        "enabled": true,
+        "server_name": "04442424.bpB-VPn-CK7.PaGes.DEv",
+        "alpn": "http/1.1",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "randomized"
+        }
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/V3iStBlVMvnP7Rqx?ed=2560",
+        "headers": {
+          "Host": "04442424.BpB-VPN-cK7.PaGeS.dev"
+        },
+        "max_early_data": 2048,
+        "early_data_header_name": "Sec-WebSocket-Protocol"
+      },
+      "packet_encoding": ""
+    },
+    {
+      "type": "vless",
+      "tag": "[2a06:98c1:3120::3]",
+      "domain_strategy": "prefer_ipv6",
+      "server": "[2a06:98c1:3120::3]",
+      "server_port": 443,
+      "uuid": "8f7faaaa-cb73-41ab-b5cf-5c37eb367e91",
+      "tls": {
+        "enabled": true,
+        "server_name": "04442424.Bpb-vpN-cK7.pAGEs.dev",
+        "alpn": "http/1.1",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "randomized"
+        }
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/Wx6drLs9q2qaBuGH?ed=2560",
+        "headers": {
+          "Host": "04442424.bPB-vPn-cK7.PAGEs.deV"
+        },
+        "max_early_data": 2048,
+        "early_data_header_name": "Sec-WebSocket-Protocol"
+      },
+      "packet_encoding": ""
+    },
+    {
+      "type": "dns",
+      "tag": "dns-out"
+    },
+    {
+      "type": "direct",
+      "tag": "direct"
+    },
+    {
+      "type": "direct",
+      "tag": "direct-fragment",
+      "tls_fragment": {
+        "enabled": true,
+        "size": "10-20",
+        "sleep": "0-0"
+      }
+    },
+    {
+      "type": "direct",
+      "tag": "bypass"
+    },
+    {
+      "type": "block",
+      "tag": "block"
+    }
+  ],
+  "route": {
+    "geoip": {
       "path": "geo-assets/sagernet-sing-geoip-geoip.db"
     },
     "geosite": {
@@ -39,7 +470,7 @@
     },
     "clash_api": {
       "external_controller": "127.0.0.1:6756",
-      "secret": "ECALLVxzvtR0Ffo8"
+      "secret": "RAzaJkQXHDQG-R2m"
     }
   }
 }
