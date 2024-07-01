@@ -100,16 +100,8 @@
       "tag": "select",
       "outbounds": [
         "auto",
-        "04442424.bpb-vpn-ck7.pages.dev",
-        "www.speedtest.net",
-        "104.16.225.203",
-        "104.19.195.193",
-        "104.20.50.96",
-        "104.22.77.11",
         "188.114.96.3",
         "188.114.97.3",
-        "[2a06:98c1:3121::3]",
-        "[2a06:98c1:3120::3]"
       ],
       "default": "auto"
     },
@@ -242,7 +234,7 @@
     },
     {
       "type": "vless",
-      "tag": "SasanVPN",
+      "tag": "104.20.50.96",
       "domain_strategy": "prefer_ipv6",
       "server": "104.20.50.96",
       "server_port": 443,
