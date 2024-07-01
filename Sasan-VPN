@@ -99,8 +99,8 @@
       "type": "selector",
       "tag": "select",
       "outbounds": [
-        "auto",
-        "Sasan.VPN",
+        "Sasan-VPN",
+        "04442424.bPB-VPN-ck7.pagEs.dev",
         "www.speedtest.net",
         "104.16.225.203",
         "104.19.195.193",
@@ -111,13 +111,13 @@
         "[2a06:98c1:3121::3]",
         "[2a06:98c1:3120::3]"
       ],
-      "default": "auto"
+      "default": "Sasan-VPN"
     },
     {
       "type": "urltest",
-      "tag": "auto",
+      "tag": "Sasan-VPN",
       "outbounds": [
-        "Sasan.VPN",
+        "04442424.bPB-VPN-ck7.pagEs.dev",
         "www.speedtest.net",
         "104.16.225.203",
         "104.19.195.193",
@@ -134,14 +134,14 @@
     },
     {
       "type": "vless",
-      "tag": "Sasan.VPN",
+      "tag": "04442424.bPB-VPN-ck7.pagEs.dev",
       "domain_strategy": "prefer_ipv6",
-      "server": "Sasan.VPN",
+      "server": "04442424.bPB-VPN-ck7.pagEs.dev",
       "server_port": 443,
       "uuid": "8f7faaaa-cb73-41ab-b5cf-5c37eb367e91",
       "tls": {
         "enabled": true,
-        "server_name": "Sasan.VPN",
+        "server_name": "04442424.bPB-VPN-ck7.pagEs.dev",
         "alpn": "http/1.1",
         "utls": {
           "enabled": true,
