@@ -134,7 +134,7 @@
     },
     {
       "type": "vless",
-      "tag": "Sasan-VPN",
+      "tag": "04442424.bpb-vpn-ck7.pages.dev",
       "domain_strategy": "prefer_ipv6",
       "server": "04442424.bpb-vpn-ck7.pages.dev",
       "server_port": 443,
@@ -242,7 +242,7 @@
     },
     {
       "type": "vless",
-      "tag": "104.20.50.96",
+      "tag": "SasanVPN",
       "domain_strategy": "prefer_ipv6",
       "server": "104.20.50.96",
       "server_port": 443,
